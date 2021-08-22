@@ -16,5 +16,8 @@
     "url": "https://github.com/zachgarrett24/api_project/issues"
   },
   "homepage": "https://github.com/zachgarrett24/api_project#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.5"
+  }
 }
