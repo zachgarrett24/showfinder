@@ -68,3 +68,4 @@ async function prefetchList() {
   }
 
   prefetchList();
+  console.log('this is a test')
