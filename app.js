@@ -111,7 +111,11 @@ function renderPreview(event) {
             </a>
         </div>
     `);
+
+    return newElem;
 }
+
+
 
 function onFetchStart() {
     $('#loading').addClass('active');
