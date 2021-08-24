@@ -98,6 +98,21 @@ $('#search').on('submit', async function (event) {
     }
 });
 
+function renderPreview(event) {
+    const { dates, id, images, info, name, _embedded } = event;
+    const firstImage = event.images[1].url;
+    const venue = event.venues[0].name;
+
+    const newElem = $(`
+        <div class="event-preview">
+            <a href="#">
+                <img src="${firstImage}" />
+                <h3>${venue}</h3>
+            </a>
+        </div>
+    `);
+}
+
 function onFetchStart() {
     $('#loading').addClass('active');
 }
