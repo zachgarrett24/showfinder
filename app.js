@@ -90,7 +90,7 @@ $('#search').on('submit', async function (event) {
         const events = data._embedded.events;
         console.log("EVENTS", events);
 
-        return events;
+        updatePreview(events);
 
     
     } catch (error) {
@@ -100,19 +100,30 @@ $('#search').on('submit', async function (event) {
 
 function renderPreview(event) {
     const { dates, id, images, info, name, _embedded } = event;
-    const firstImage = event.images[1].url;
-    const venue = event.venues[0].name;
+    const firstImage = event.images[0].url;
+    const venue = event._embedded.venues[0].name;
 
     const newElem = $(`
         <div class="event-preview">
             <a href="#">
-                <img src="${firstImage}" />
+                <img src="${firstImage}" width="300" height="300"/>
                 <h3>${venue}</h3>
             </a>
         </div>
     `);
+    newElem.data('event', event);
 
     return newElem;
+}
+
+function updatePreview(events) {
+    const root = $('#preview');
+    const results = root.find('.results');
+    results.empty();
+
+    events.forEach((theEvent) => {
+        results.append(renderPreview(theEvent));
+    });
 }
 
 
