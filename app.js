@@ -3,6 +3,7 @@ const API_KEY = 'apikey=XtC3y6Uo8LjeL5IgPrEWm8kRqzY7kR3p';
 const classificationsArray = [];
 async function fetchEvents() {
     const url = `${BASE_URL}/events.json?${API_KEY}`;
+    onFetchStart()
 
     try {
         const response = await fetch(url);
@@ -11,6 +12,8 @@ async function fetchEvents() {
 
     } catch (error) {
         console.error(error);
+    } finally {
+        onFetchEnd();
     }
 }
 
@@ -80,11 +83,25 @@ async function prefetchList() {
 
 $('#search').on('submit', async function (event) {
     event.preventDefault();
-
     try {
         const response = await fetch(buildSearchString());
-        console.log("response", response);
+        const data = await response.json();
+
+        const events = data._embedded.events;
+        console.log("EVENTS", events);
+
+        return events;
+
+    
     } catch (error) {
-        
+        console.error(error);
     }
-})
+});
+
+function onFetchStart() {
+    $('#loading').addClass('active');
+}
+
+function onFetchEnd() {
+    $('#loading').removeClass('active');
+}
