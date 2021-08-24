@@ -27,7 +27,6 @@ async function fetchAllClassifications() {
             if(one.segment){
                 const actualClassifications = one.segment.name;
                 classificationsArray.push(actualClassifications);
-                console.log(actualClassifications);
                 return actualClassifications;
             }
         })
@@ -54,7 +53,6 @@ async function fetchAllClassifications() {
 async function prefetchList() {
     try {
     const classifications = await fetchAllClassifications();
-    console.log('array', classificationsArray);
     $('.classification-count').text(`(${ classificationsArray.length })`);
 
     classificationsArray.forEach(classification => {
@@ -68,4 +66,25 @@ async function prefetchList() {
   }
 
   prefetchList();
-  console.log('this is a test')
+
+  function buildSearchString() {
+      const classValue = $('#select-classification').val();
+      const keyValue = $('#keywords').val();
+
+      const url = `${BASE_URL}/events.json?classificationName=${classValue}&keyword=${keyValue}&${API_KEY}`
+      const encodedUrl = encodeURI(url);
+      return encodedUrl;
+  }
+
+  buildSearchString();
+
+$('#search').on('submit', async function (event) {
+    event.preventDefault();
+
+    try {
+        const response = await fetch(buildSearchString());
+        console.log("response", response);
+    } catch (error) {
+        
+    }
+})
